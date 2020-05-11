@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Compliance :: Delegations</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/bootstrap-toggle.min.css" />
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/font-awesome-css.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/default.rtl.css" />
+
+<style type="text/css">
+@import
+	url(https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css)
+	;
+
+.alpha {
+	margin: 20px;
+}
+
+th {
+	font-weight: normal;
+}
+
+.alertify-log-success {
+	color: #FFFFFF;
+	background-color: #006400;
+	border-color: #2E8B57;
+	font-weight: bolder;
+}
+
+.alertify-log-error {
+	color: #FFFFFF;
+	background-color: #8B0000;
+	border-color: #800000;
+	font-weight: bolder;
+}
+
+#config-view, #secret-view {
+	border: 1px solid #000;
+	margin: 0;
+	padding: 10px 20px;
+}
+
+tr {
+	padding-bottom: 20px;
+	height: 20px;
+}
+
+#banner {
+	background: url(img/logo.webp) no-repeat 6px center;
+	width: 100px;
+	height: 60px;
+	display: block;
+}
+
+body {
+	line-height: 1.25
+}
+
+#clusterView, #environmentView, #configBrowserView, #upgradeView {
+	
+}
+
+.alertify-dialog {
+	font-size: 15px;
+	font-weight: bolder;
+	color: red;
+}
+
+.btn {
+	background-color: #000000;
+	color: #ffffff
+}
+
+.btn:hover {
+	background-color: #000000;
+	color: #ffffff
+}
+
+.btn-primary {
+	background-color: #000000;
+	color: #ffffff
+}
+
+/*************************************************************************/
+.table-scroll {
+	position: relative;
+	max-width: 100%;
+	margin: inherit;
+	/*border: 1px solid #000;*/
+}
+
+.table-wrap {
+	width: 100%;
+	overflow: scroll;
+	max-height: 650px ! important;
+}
+
+.table-scroll table {
+	width: 100%;
+	height: auto;
+	max-height: 650px ! important;
+	border-collapse: separate;
+	border-spacing: 1px 1px;
+	/* border-spacing: 6px; */
+}
+
+.table-scroll th, .table-scroll td {
+	font-size: 14px;
+	background: #fff;
+	white-space: nowrap;
+	vertical-align: top;
+	height: 30px !important;
+	max-height: 30px !important;
+}
+
+.table-scroll thead, .table-scroll tfoot {
+	background: #f9f9f9;
+}
+
+#componentsEnvironmentView tr:last {
+	margin-bottom: 30px;
+}
+/*************************************************************************/
+.select2-container .select2-selection--single {
+	height: 30px;
+	font-size: 16px;
+}
+</style>
+</head>
+<body>
+	<div class="alpha">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark"
+			style="background-color: #111927 !important">
+			<a href="#" class="navbar-brand"> <img src=""><span
+				style="font-weight: bolder; color: white;"> Compliance :
+					Manage Delegations</span>
+			</a>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarCollapse"
+				align="left">
+				<div class="navbar-nav" align="center"></div>
+
+				<form class="form-inline ml-auto">
+					<div class="input-group">
+						<div class="">
+							<span sec:authentication="name"
+								style="font-weight: bolder; color: white; font-size: 20px;">Guest</span>
+						</div>
+					</div>
+					<div class="input-group" style="padding-left: 20px">
+					</div>
+				</form>
+			</div>
+		</nav>
+	</div>
+
+
+	<div class="container" id="clusterContainer"
+		style="max-width: 90% !important">
+		
+		
+		<div class="row">
+			<br>
+		</div>
+		<div class="row">
+			<div class="col-sm-1" id="autoRefreshClusterDiv"></div>
+			<div class="col-sm-10"></div>
+			<div class="col-sm-1"></div>
+		</div>
+		<div class="row">
+			<br>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" id="components-container">
+				<div class="table-wrapper">
+					<table class="table table-bordered" id="delegationsTable"
+						style="font-size: 16px;">
+						<thead class="table-dark" align="center">
+							<tr>
+							    <th>#</th>
+								<th>Delegate</th>
+								<th>Delegation Task Type</th>
+								<th>product Journey & Task Names</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Last Updated</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="delegationsView" align="center"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<br>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js-plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="js-plugins/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js-plugins/bootstrap-toggle.min.js"></script>
+	<script type="text/javascript" src="js/delegations.js"></script>
+
+</body>
+</html>
